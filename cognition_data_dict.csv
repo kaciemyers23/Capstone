@@ -1,0 +1,42 @@
+Variable/Column Name,Data Type,Survey Question
+AI_usage_freq,factor with 7 levels,"How often do you use digital or AI-powered tools (e.g., ChatGPT, Copilot, Gemini, AI-enhanced search) in your daily life? "
+hours_online,factor with 7 levels,"On average, how many hours do you spend online each day?"
+AI_help_decisions,numeric 1-7,"I often use AI tools to help me make decisions, even for everyday choices."
+confident_in_AI_decisions,numeric 1-7,I feel more confident in my decisions when an AI tool supports my thinking. 
+rely_on_AI,numeric 1-7,I tend to rely on AI tools when making decisions feels difficult.
+AI_clarity,numeric 1-7,AI can be helpful for giving me clarity when I’m unsure what choice to make. 
+second_guessing_self,numeric 1-7,I’ve started second-guessing my own judgement more than I used to. 
+AI_differs,numeric 1-7,"If AI gives a different answer to mine, I sometimes wonder whether I might be mistaken. "
+AI_thinking_right_track,numeric 1-7,I use AI tools to check whether my thinking is on the right track. 
+pause_to_check,numeric 1-7,I tend to pause before acting so I can check what an AI tool suggests. 
+AI_important_decisions,numeric 1-7,"For important decisions, I feel more comfortable checking an AI tool as part of my process. "
+change_own_decisions,numeric 1-7,Using AI regularly has changed the way I feel about making decisions on my own. 
+AI_influence_decisions_think,numeric 1-7,I think about how much AI might be influencing my decisions. 
+AI_persuasive,numeric 1-7,"I feel that AI suggestions can be persuasive, even when I try to rely on my own intuition. "
+judgement_separation,numeric 1-7,I need to take a moment to separate my own judgement from AI suggestions. 
+rely_awareness,numeric 1-7,"Even when AI is helpful, I’m aware that relying on it too much may not be ideal for me long-term. "
+independent_without_AI,numeric 1-7,I feel more independent when I make decisions without using AI. 
+AI_influence_decisions,numeric 1-7,AI tools influence how I think about my decisions. 
+reflect_decision_style,numeric 1-7,I occasionally reflect on whether AI is shaping my decision-making style. 
+conflicted_ab_influence,numeric 1-7,I feel conflicted about how much influence AI has on me. 
+AI_effect_strength,numeric 1-7,"I generally trust my own judgement, but AI tools can sometimes affect how strongly I feel about a choice. "
+AI_best_interest,numeric 1-7, How much do you trust AI systems to act in your best interests?  
+clear_life_priorities,numeric 1-7,How clear do you feel about what matters most in your life right now? 
+digital_effect_mind,numeric 1-7,"How much does modern digital life affect your ability to focus, decide, or think clearly? "
+AI_growing_role,numeric 1-7,How do you feel about the growing role of AI in everyday decision-making? 
+age,factor with 6 levels,What is your age group?
+gender,character,Which of the following best describes your gender?
+country,character,Country of residence
+education,factor with 6 levels,What is your highest level of education? 
+work_status,factor with 6 levels,Which of the following best describes your current work status? 
+emotional_wellbeing,numeric 1-7,How would you describe your general emotional wellbeing?  
+empathy_AI_values,binary,"""Empathy"" selected in top 3 values respondent believes AI should have"
+fairness_AI_values,binary,"""Fairness"" selected in top 3 values respondent believes AI should have"
+honesty_AI_values,binary,"""Honesty"" selected in top 3 values respondent believes AI should have"
+wellbeing_AI_values,binary,"""Wellbeing"" selected in top 3 values respondent believes AI should have"
+nonharm_AI_values,binary,"""Non-Harm"" selected in top 3 values respondent believes AI should have"
+respect_AI_values,binary,"""Respect"" selected in top 3 values respondent believes AI should have"
+responsibility_AI_values,binary,"""Responsibility"" selected in top 3 values respondent believes AI should have"
+transparency_AI_values,binary,"""Transparency"" selected in top 3 values respondent believes AI should have"
+accountability_AI_values,binary,"""Accountability"" selected in top 3 values respondent believes AI should have"
+accuracy_AI_values,binary,"""Accuracy"" selected in top 3 values respondent believes AI should have"

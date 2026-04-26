@@ -1,0 +1,66 @@
+Variable/Column Name,Data Type,Survey Question
+AI_usage_freq,factor with 7 levels,"How often do you use digital or AI-powered tools (e.g., ChatGPT, Copilot, Gemini, AI-enhanced search) in your daily life? "
+hours_online,factor with 7 levels,"On average, how many hours do you spend online each day? (self-estimate)  "
+AI_confidence,numeric 1-7,"In general, how confident do you feel using AI tools?  "
+AI_comfort,numeric 1-7,How comfortable do you feel interacting with AI tools? 
+pre_attachment_knowledge,numeric 1-7,"Before taking this survey, how familiar were you with the idea that some people may form emotional attachments or dependencies on AI companions (such as chatbots, virtual partners, or AI assistants)?  "
+attachment_encounters_freq,factor with 7 levels,How often have you encountered discussions or examples of people forming emotional attachments to AI companions?  
+AI_replace_human_freq,factor with 7 levels,How often do interactions with AI tools replace interactions you might otherwise have with other people? 
+digital_effect_mind,factor with 5 levels,"How much does modern digital life affect your ability to focus, decide, or think clearly? "
+AI_influence_decisions,numeric 1-7,AI tools influence how I think about my decisions. 
+feeling_lonely,numeric 1-7,How often do you feel lonely?
+human_relation_satisfaction,numeric 1-7, How satisfied are you with the quality of your current human relationships?  
+AI_emotional_support,numeric 1-7,To what extent do you feel you receive emotional support or comfort from AI tools? 
+AI_form_of_companionship,numeric 1-7,To what extent do AI tools feel like a form of companionship to you? 
+AI_to_human_meaningful,numeric 1-7,How meaningful do interactions with AI tools feel to you compared with your relationships with other people? 
+AI_to_human_comfort,numeric 1-7,How comfortable are you sharing personal thoughts or emotions with AI tools that you would not share with most people? 
+AI_to_human_emotional_safety,numeric 1-7,How emotionally safe do you feel expressing yourself to AI tools compared with other people? 
+AI_trust,numeric 1-7,How much do you trust AI systems to act in your best interests? 
+AI_boundaries,numeric 1-7,How clear are your personal boundaries when interacting with AI tools? 
+AI_boundaries_change,character,"Compared to when you first used AI tools, do you feel your emotional or conversational boundaries with them have changed? "
+risk_concern,numeric 1-7,"How concerned are you about potential risks (privacy, emotional dependence, misinformation) when interacting with AI tools? "
+dependency_concerns,numeric 1-7,How concerned are you about becoming emotionally dependent on AI tools over time? 
+AI_rely_growth,numeric 1-7,"How likely is it that you will rely more on AI tools for connection, conversation, or companionship in the future than you do now? "
+open_to_AI_relationship,numeric 1-7,How open are you to the idea of developing a deeper emotional relationship with an AI tool at any point in the future? 
+AI_replace_human,numeric 1-7,Do you believe AI could meaningfully replace some forms of human companionship for people in the future? 
+socially_acceptable,numeric 1-7,How socially acceptable do you think it is for people to form emotional connections with AI tools today?  
+personal_or_other_relationship,character,"Have you personally experienced, or do you personally know someone who has experienced, a deeper emotional connection with an AI tool for companionship or support? "
+only_humans,numeric 1-7,"Do you believe there are emotional needs that only other humans can meet, regardless of how advanced AI becomes? "
+clear_life_priorities,numeric 1-7,How clear do you feel about what matters most in your life right now? 
+clear_values,numeric 1-7,How clear are your core personal values to you? 
+decisions_align_values,numeric 1-7,How well do your daily decisions align with your core personal values? 
+decisions_conflict_values,numeric 1-7,How often do you feel a conflict between what you value and how you spend your time? 
+clear_AI_values,numeric 1-7,How clear do you feel the values of AI systems are when you interact with them? 
+AI_values_align_personal,numeric 1-7,To what extent do you feel that AI tools behave in ways that align with your personal values? 
+AI_emotion_align_personal,numeric 1-7,"To what extent do AI tools reflect emotional values that matter to you (e.g., empathy, honesty, respect)?"
+AI_different_values_concern,numeric 1-7,How concerned are you that AI systems might act based on values that conflict with your own?  
+AI_future_values_confidence,numeric 1-7,How confident are you that AI systems will become better aligned with human values in the future?  
+AI_respect_expectations,numeric 1-7,How strongly do you expect AI systems to respect your personal boundaries and emotional needs? 
+interest_in_daily_life,numeric 1-7,My daily life has been filled with things that interest me.
+emotional_wellbeing,numeric 1-7,How would you describe your general emotional wellbeing?  
+age,factor with 6 levels,What is your age group?
+gender,character,Which of the following best describes your gender?
+country,character,Country of residence
+education,factor with 6 levels,What is your highest level of education? 
+work_status,factor with 6 levels,Which of the following best describes your current work status? 
+empathy_AI_values,binary,"""Empathy"" selected in top 3 values respondent believes AI should have"
+fairness_AI_values,binary,"""Fairness"" selected in top 3 values respondent believes AI should have"
+honesty_AI_values,binary,"""Honesty"" selected in top 3 values respondent believes AI should have"
+wellbeing_AI_values,binary,"""Wellbeing"" selected in top 3 values respondent believes AI should have"
+nonharm_AI_values,binary,"""Non-Harm"" selected in top 3 values respondent believes AI should have"
+respect_AI_values,binary,"""Respect"" selected in top 3 values respondent believes AI should have"
+responsibility_AI_values,binary,"""Responsibility"" selected in top 3 values respondent believes AI should have"
+transparency_AI_values,binary,"""Transparency"" selected in top 3 values respondent believes AI should have"
+accountability_AI_values,binary,"""Accountability"" selected in top 3 values respondent believes AI should have"
+accuracy_AI_values,binary,"""Accuracy"" selected in top 3 values respondent believes AI should have"
+empathy_AI_values,binary,"""Empathy"" selected in top 3 values respondent believes AI should have"
+fairness_AI_values,binary,"""Fairness"" selected in top 3 values respondent believes AI should have"
+honesty_AI_values,binary,"""Honesty"" selected in top 3 values respondent believes AI should have"
+wellbeing_AI_values,binary,"""Wellbeing"" selected in top 3 values respondent believes AI should have"
+nonharm_AI_values,binary,"""Non-Harm"" selected in top 3 values respondent believes AI should have"
+respect_AI_values,binary,"""Respect"" selected in top 3 values respondent believes AI should have"
+responsibility_AI_values,binary,"""Responsibility"" selected in top 3 values respondent believes AI should have"
+transparency_AI_values,binary,"""Transparency"" selected in top 3 values respondent believes AI should have"
+accountability_AI_values,binary,"""Accountability"" selected in top 3 values respondent believes AI should have"
+accuracy_AI_values,binary,"""Accuracy"" selected in top 3 values respondent believes AI should have"
+emotional_AI_use,binary,"""Emotional support or conversation"" selected as most often use of AI"

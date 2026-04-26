@@ -1,0 +1,201 @@
+/* ===================================
+CSS STYLE SHEET FOR CAPSTONE SHINY APP
+==================================== */
+
+body {
+    font-family: "Georgia", "Times New Roman", serif;
+    background-color: #f7f8fa;
+    color: #1f2a44;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* =========
+   HEADER
+========= */
+
+.main-header .logo {
+    font-family: "Georgia", serif;
+    font-weight: bold;
+    line-height: 20px;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    white-space: normal !important;
+}
+
+.main-header .navbar {
+    background-color: #1f2a44 !important;
+    border-bottom: 2px solid #dcdcdc;
+}
+
+/* ==========
+   SIDEBAR
+========== */
+
+.main-sidebar {
+    background-color: #1f2a44;
+}
+
+.sidebar-menu > li > a {
+    color: #eaeaea;
+    font-size: 14px;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar-menu > li > a:hover {
+    background-color: #1f2a44 !important;
+    border-left: 3px solid #6aa9ff !important;
+}
+
+.sidebar-menu > li.active > a {
+    background-color: #1f2a44 !important;
+    border-left: 3px solid #6aa9ff !important;
+}
+
+/* ========
+   BOXES
+======== */
+
+.box {
+    border-radius: 6px;
+    border: 1px solid #e1e4e8;
+    box-shadow: none;
+    background-color: #ffffff;
+}
+
+.box-header {
+    background-color: #f0f2f5 !important;
+    color: #1f2a44;
+    border-bottom: 1px solid #e1e4e8;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* ==============
+   VALUE BOXES
+============== */
+
+.small-box {
+    border-radius: 6px;
+    background-color: #ffffff !important;
+    border: 1px solid #e1e4e8;
+    color: #1f2a44;
+}
+
+.small-box .innter {
+    color: #1f2a44;
+}
+
+.small-box .icon {
+    color: #6aa9ff !important;
+    opacity: 0.7;
+}
+
+/* =======
+   TEXT
+======= */
+
+h1, h2, h3, h4 {
+    font-family: "Georgia", serif;
+    font-weight: 600;
+    color: #1f2a44;
+}
+
+p {
+    font-size: 14px;
+    color: #1f2a44;
+}
+
+/* ========
+   TABLE
+======== */
+
+.dataTable {
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+}
+
+.dataTable_wrapper {
+    font-size: 13px;
+}
+
+table.dataTable thead {
+    background-color: #f0f2f5;
+}
+
+.plotly {
+    background-color: #ffffff;
+    border-radius: 6px;
+}
+
+.js-plotly-plot .plotly .xtick text,
+.js-plotly-plot .plotly .ytick text {
+    font-size: 12px !important;
+    font-family: "Georgia", serif;
+}
+
+.gtitle, .g-xtitle, .g-ytitle {
+    font-size: 14px !important;
+    font-weight: 500;
+}
+
+/* =========
+   INPUTS
+========= */
+
+.selective-input {
+    border-radius: 4px;
+    border: 1px solid #d0d7de;
+    font-size: 14px;
+}
+
+.box, .box-body {
+    overflow: visible !important;
+}
+
+.selectize-dropdown {
+    z-index: 9999 !important;
+}
+
+/* ===================
+   SPACING & LAYOUT
+=================== */
+
+.box {
+    margin-bottom: 18px;
+}
+
+.content {
+    padding-top: 10px;
+}
+
+/* =========
+   LEDEND
+========= */
+
+.legend text {
+    font-family: "Georgia" serif !important;
+    font-size: 12px !important;
+}
+
+/* ===================
+   SCROLLABLE AREAS
+=================== */
+
+.box-body {
+    overflow-x: auto;
+}
+
+/* ==================
+   EMPHASIS COLORS
+================== */
+
+:root {
+    --accent-blue: #6aa9ff;
+    --soft-gray: #f7f8fa;
+    --border-gray: #e1e4e8;
+}
+
+
+

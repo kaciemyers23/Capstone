@@ -1,0 +1,464 @@
+---
+title: "Data Analysis Capstone"
+author: "Kacie Myers"
+date: "3-3-2026"
+output: pdf
+---
+
+```{r}
+library(tidyverse)
+library(psych)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+library(cvTools)
+library(caret)
+library(corrplot)
+library(factoextra)
+```
+
+
+```{r}
+cognition_clean <- read_csv("~/capstone/data/cognition_clean.csv")
+companionship_clean <- read_csv("~/capstone/data/companionship_clean.csv")
+```
+
+
+```{r}
+ggplot(data = cognition_clean) +
+  geom_point(mapping = aes(x = AI_help_decisions, y = confident_in_AI_decisions, color = AI_usage_freq))
+
+```
+
+## Creating Factors
+
+cognition clean
+
+```{r}
+cognition_clean <- cognition_clean %>%
+  mutate(AI_usage_freq = 
+           factor(AI_usage_freq, 
+                  levels = c("Never", "Rarely", "Occasionally", "Sometimes", "Often", "Very often", "Everyday"),
+                  ordered = TRUE),
+         hours_online = 
+           factor(hours_online, 
+                  levels = c("Less than 2 hours", "2–4 hours", "5–6 hours", "7–8 hours", "9–10 hours", "11–12 hours", "More than 12 hours"),
+                  ordered = TRUE),
+         age = 
+           factor(age, 
+                  levels = c("18 - 24", "25 - 34", "35 - 44", "45 - 54", "55 - 65", "Over 65"),
+                  ordered = TRUE),
+         work_status = 
+           factor(work_status, 
+                  levels = c("Student", "Not currently working", "Employed part-time", "Employed full time", "Self-employed / freelance", "Other"),
+                  ordered = TRUE),
+         education = 
+           factor(education, 
+                  levels = c("Less than high school", "High school", "Some university/college", "Bachelor’s degree", "Postgraduate degree", "Other"),
+                  ordered = TRUE))
+```
+
+companionship_clean
+
+```{r}
+companionship_clean <- companionship_clean %>%
+  mutate(AI_usage_freq = 
+           factor(AI_usage_freq, 
+                  levels = c("Never", "Rarely", "Occasionally", "Sometimes", "Often", "Very often", "Everyday"),
+                  ordered = TRUE),
+         hours_online = 
+           factor(hours_online, 
+                  levels = c("Less than 2 hours", "2–4 hours", "5–6 hours", "7–8 hours", "9–10 hours", "11–12 hours", "More than 12 hours"),
+                  ordered = TRUE),
+         attachment_encounters_freq = 
+           factor(attachment_encounters_freq, 
+                  levels = c("Never", "Rarely", "Occasionally", "Sometimes", "Often", "Very often", "Everyday"),
+                  ordered = TRUE),
+         AI_replace_human_freq =
+           factor(AI_replace_human_freq, 
+                  levels = c("Never", "Rarely", "Occasionally", "Sometimes", "Often", "Very often", "Everyday"),
+                  ordered = TRUE),
+         digital_effect_mind =
+           factor(digital_effect_mind, 
+                  levels = c("Not at all", "Slightly", "Moderately", "Significantly", "Extremely"),
+                  ordered = TRUE),
+         age = 
+           factor(age, 
+                  levels = c("18 - 24", "25 - 34", "35 - 44", "45 - 54", "55 - 65", "Over 65"),
+                  ordered = TRUE),
+         work_status = 
+           factor(work_status, 
+                  levels = c("Student", "Not currently working", "Employed part-time", "Employed full time", "Self-employed / freelance", "Other"),
+                  ordered = TRUE),
+         education = 
+           factor(education, 
+                  levels = c("Less than high school", "High school", "Some university/college", "Bachelor’s degree", "Postgraduate degree", "Other"),
+                  ordered = TRUE))
+```
+
+
+
+
+## Graphs
+
+cognition clean
+
+```{r}
+ggplot(cognition_clean) +
+  geom_bar(mapping = aes(x=AI_help_decisions, fill = AI_usage_freq), position = "fill")
+
+ggplot(cognition_clean) +
+  geom_bar(mapping = aes(x=AI_help_decisions, fill = AI_usage_freq))
+
+ggplot(cognition_clean) +
+  geom_bar(mapping = aes(x=rely_on_AI, fill = AI_usage_freq))
+
+ggplot(cognition_clean) +
+  geom_jitter(mapping = aes(x = rely_on_AI, y = rely_awareness, color = AI_usage_freq))
+
+ggplot(cognition_clean) +
+  geom_bar(mapping = aes(x = AI_influence_decisions, fill = gender))
+
+ggplot(cognition_clean) +
+  geom_jitter(mapping = aes(x=AI_influence_decisions, y = AI_influence_decisions_think, color = AI_usage_freq)) 
+
+ggplot(cognition_clean) +
+  geom_bar(mapping = aes(x = digital_effect_mind, fill = gender))
+```
+
+companionship clean
+
+```{r}
+ggplot(companionship_clean) +
+  geom_bar(mapping = aes(x = attachment_encounters_freq))
+
+ggplot(companionship_clean) +
+  geom_bar(mapping = aes(x = AI_emotional_support, fill = AI_usage_freq))
+
+ggplot(companionship_clean) +
+  geom_bar(mapping = aes(x = AI_to_human_comfort, fill = AI_usage_freq))
+
+ggplot(companionship_clean) +
+  geom_bar(mapping = aes(x = AI_to_human_emotional_safety, fill = AI_usage_freq))
+
+ggplot(companionship_clean) +
+  geom_bar(mapping = aes(x = AI_trust, fill = AI_usage_freq))
+
+ggplot(companionship_clean) +
+  geom_bar(mapping = aes(x = AI_boundaries_change))
+
+ggplot(companionship_clean) +
+  geom_bar(mapping = aes(x = AI_replace_human, fill = AI_usage_freq))
+
+ggplot(companionship_clean) +
+  geom_bar(mapping = aes(x = socially_acceptable, fill = AI_usage_freq))
+```
+
+
+
+
+
+
+# Companionship Factor Analysis
+
+```{r}
+# Companionship
+fa_companionship_vars <- companionship_clean %>%
+  dplyr::select(AI_confidence, AI_comfort, pre_attachment_knowledge, AI_influence_decisions, 
+                feeling_lonely, human_relation_satisfaction, AI_emotional_support, 
+                AI_form_of_companionship, AI_to_human_meaningful, AI_to_human_comfort, 
+                AI_to_human_emotional_safety, AI_trust, AI_boundaries, risk_concern, 
+                dependency_concerns, AI_rely_growth, open_to_AI_relationship, AI_replace_human,
+                socially_acceptable, only_humans, clear_life_priorities, clear_values, 
+                decisions_align_values, decisions_conflict_values, clear_AI_values, 
+                AI_values_align_personal, AI_emotion_align_personal, AI_different_values_concern,
+                AI_future_values_confidence, AI_respect_expectations, interest_in_daily_life,
+                emotional_wellbeing)  
+
+
+companionship_cor <- cor(fa_companionship_vars, use = "pairwise.complete.obs")
+corrplot(companionship_cor)
+
+companionship_pca <- prcomp(fa_companionship_vars, scale. = TRUE)
+fviz_eig(companionship_pca)
+
+fa.parallel(fa_companionship_vars)
+
+
+fa_companionship <- fa(fa_companionship_vars, nfactors = 5, rotate = "varimax", scores = "regression")
+fa_companionship$loadings
+
+fa.diagram(fa_companionship)
+
+companionship_reduced <- companionship_clean %>%
+  mutate(f1_ai_emotional_connection_and_companionship = fa_companionship$scores[,1],
+         f2_personal_wellbeing_values_alignment = fa_companionship$scores[,2],
+         f3_ai_trust_and_concerns = fa_companionship$scores[,3],
+         f4_ai_familiarity_and_comfort = fa_companionship$scores[,4],
+         f5_percieved_ai_value_alignment = fa_companionship$scores[,5]) %>%
+  select(-AI_confidence, -AI_comfort, -pre_attachment_knowledge, -AI_influence_decisions, 
+                -feeling_lonely, -human_relation_satisfaction, -AI_emotional_support, 
+                -AI_form_of_companionship, -AI_to_human_meaningful, -AI_to_human_comfort, 
+                -AI_to_human_emotional_safety, -AI_trust, -AI_boundaries, -risk_concern, 
+                -dependency_concerns, -AI_rely_growth, -open_to_AI_relationship, -AI_replace_human,
+                -socially_acceptable, -only_humans, -clear_life_priorities, -clear_values, 
+                -decisions_align_values, -decisions_conflict_values, -clear_AI_values, 
+                -AI_values_align_personal, -AI_emotion_align_personal, -AI_different_values_concern,
+                -AI_future_values_confidence, -AI_respect_expectations, -interest_in_daily_life,
+                -emotional_wellbeing)
+```
+
+## AI EMOTIONAL CONNECTION & COMPANIONSHIP
+Factor 1: open_to_AI_relationship, AI_emotional_support, AI_form_of_companionship, AI_rely_growth, 
+AI_to_human_meaningful, AI_to_human_comfort, AI_replace_human, socially_acceptable, 
+AI_emotion_align_personal, dependency_concerns, AI_to_human_emotional_safety, AI_influence_decisions
+
+
+## PERSONAL WELLBEING & VALUES ALIGNMENT
+Factor 2: emotional_wellbeing, human_relation_satisfaction, interest_in_daily_life,
+clear_life_priorities, decisions_align_values, clear_values, 
+feeling_lonely, decisions_conflict_values
+
+
+## AI TRUST & CONCERNS
+Factor 3: dependency_concerns, AI_different_values_concern, AI_trust, 
+AI_future_values_confidence, AI_respect_expectations
+
+
+## AI FAMILIARITY AND COMFORT
+Factor 4: AI_confidence, AI_comfort, pre_attachment_knowledge
+
+
+## PERCIEVED AI VALUE ALIGNMENT
+Factor 5: clear_AI_values, AI_values_align_personal
+
+
+
+
+# Companionship Linear Regression
+
+```{r}
+
+lm_companionship_all <- lm(f1_ai_emotional_connection_and_companionship ~ ., data = companionship_reduced)
+summary(lm_companionship_all)
+
+lm_companionship_step <- step(lm_companionship_all)
+summary(lm_companionship_step)
+
+```
+
+
+
+
+
+# Companionship CART Model
+
+```{r}
+# split data
+set.seed(20190407)
+companionship_train <- companionship_reduced %>% sample_frac(.65)
+companionship_test <- anti_join(companionship_reduced, companionship_train)
+
+
+#CART Model
+cart_companionship <- rpart(AI_usage_freq ~ ., data = companionship_train, method = "class")
+rpart.plot(cart_companionship)
+cart_companionship
+
+#Test Accuracy
+pred_cart <- predict(cart_companionship, companionship_test, type = "class")
+mean(as.character(pred_cart) == as.character(companionship_test$AI_usage_freq))
+table(pred_cart, companionship_test$AI_usage_freq)
+
+#Test Average Distance
+actual_num <- as.numeric(companionship_test$AI_usage_freq)
+pred_num <- as.numeric(pred_cart)
+mean(abs(actual_num - pred_num))
+
+```
+
+Mean/Accuracy is 0.3652695
+
+Average “distance” between predicted and actual categories = 1.179641
+The model often predicts a nearby category, but rarely exactly correct
+
+
+
+
+# Companionship Random Forest Model
+
+```{r}
+#Random Forest Model
+companionship_train <- companionship_train %>% na.omit()
+companionship_test <- companionship_test %>% na.omit()
+forest_companionship <- randomForest(AI_usage_freq ~ ., data = companionship_train)
+varImpPlot(forest_companionship)
+forest_companionship
+
+#Test Accuracy
+pred_forest <- predict(forest_companionship, companionship_test)
+mean(as.character(pred_forest) == as.character(companionship_test$AI_usage_freq))
+table(pred_forest, companionship_test$AI_usage_freq)
+
+```
+
+Accuracy is 0.3772455
+
+
+
+
+# Cognition Factor Analysis
+
+```{r}
+fa_cognition_vars <- cognition_clean %>%
+  select(AI_help_decisions, confident_in_AI_decisions, rely_on_AI, AI_clarity,
+                second_guessing_self, AI_differs, AI_thinking_right_track, pause_to_check, 
+                AI_important_decisions, change_own_decisions, AI_influence_decisions_think, 
+                AI_persuasive, judgement_separation, rely_awareness, independent_without_AI, 
+                AI_influence_decisions, reflect_decision_style, conflicted_ab_influence, 
+                AI_effect_strength, AI_best_interest, clear_life_priorities, digital_effect_mind, 
+                AI_growing_role, emotional_wellbeing)
+
+
+cognition_cor <- cor(fa_cognition_vars, use = "pairwise.complete.obs")
+corrplot(cognition_cor)
+
+cognition_pca <- prcomp(fa_cognition_vars, scale. = TRUE)
+fviz_eig(cognition_pca)
+
+fa.parallel(fa_cognition_vars)
+
+fa_cognition <- fa(fa_cognition_vars, nfactors = 3, rotate = "varimax", scores = "regression")
+fa_cognition$loadings
+
+fa.diagram(fa_cognition)
+
+cognition_reduced <- cognition_clean %>%
+  mutate(f1_ai_decision_reliance = fa_cognition$scores[,1],
+         f2_ai_influence_awareness_and_conflict = fa_cognition$scores[,2],
+         f3_personal_well_being_and_life_clarity = fa_cognition$scores[,3]) %>%
+  select(-AI_help_decisions, -confident_in_AI_decisions, -rely_on_AI, -AI_clarity,
+                -second_guessing_self, -AI_differs, -AI_thinking_right_track, -pause_to_check, 
+                -AI_important_decisions, -change_own_decisions, -AI_influence_decisions_think, 
+                -AI_persuasive, -judgement_separation, -rely_awareness, -independent_without_AI, 
+                -AI_influence_decisions, -reflect_decision_style, -conflicted_ab_influence, 
+                -AI_effect_strength, -AI_best_interest, -clear_life_priorities, -digital_effect_mind, 
+                -AI_growing_role, -emotional_wellbeing)
+
+```
+
+## AI DECISION RELIANCE
+Factor 1: AI_help_decisions, AI_clarity, confident_in_AI_decisions, rely_on_AI,
+AI_thinking_right_track, AI_growing_role, AI_important_decisions, AI_best_interest,
+change_own_decisions, AI_influence_decisions, pause_to_check, AI_differs, AI_effect_strength
+
+
+## AI INFLUENCE AWARENESS & CONFLICT
+Factor 2: reflect_decision_style, judgement_separation, conflicted_ab_influence, 
+AI_influence_decisions_think, AI_persuasive, rely_awareness, second_guessing_self, 
+digital_effect_mind, independent_without_AI
+
+
+## PERSONAL WELLBEING & LIFE CLARITY
+Factor 3: clear_life_priorities, emotional_wellbeing
+
+
+
+
+# Cognition Linear Regression
+
+```{r}
+lm_cognition_all <- lm(f1_ai_decision_reliance ~ ., data = cognition_reduced)
+summary(lm_cognition_all)
+
+lm_cognition_step <- step(lm_cognition_all)
+summary(lm_cognition_step)
+
+```
+
+
+
+
+
+
+# Cognition CART Model
+
+```{r}
+# split data
+set.seed(20190407)
+cognition_train <- cognition_reduced %>% sample_frac(.65)
+cognition_test <- anti_join(cognition_reduced, cognition_train)
+
+cognition_train$AI_usage_freq <- factor(cognition_train$AI_usage_freq, 
+                  levels = c("Never", "Rarely", "Occasionally", "Sometimes", "Often", "Very often", "Everyday"),
+                  ordered = TRUE)
+cognition_test$AI_usage_freq <- factor(cognition_test$AI_usage_freq, 
+                  levels = c("Never", "Rarely", "Occasionally", "Sometimes", "Often", "Very often", "Everyday"),
+                  ordered = TRUE)
+
+cognition_test <- cognition_test[cognition_test$gender != "Prefer not to say", ]
+
+#CART Model
+cart_cognition <- rpart(AI_usage_freq ~ ., data = cognition_train, method = "class")
+rpart.plot(cart_cognition)
+cart_cognition
+
+
+#Test Accuracy
+pred_cart <- predict(cart_cognition, cognition_test, type = "class")
+mean(as.character(pred_cart) == as.character(cognition_test$AI_usage_freq))
+table(pred_cart, cognition_test$AI_usage_freq)
+
+#Test Average Distance
+actual_num <- as.numeric(cognition_test$AI_usage_freq)
+pred_num <- as.numeric(pred_cart)
+mean(abs(actual_num - pred_num))
+
+```
+
+Accuracy is 0.1323529
+Average “distance” between predicted and actual categories = 1.352941
+Not very good!
+
+# Cognition Random Forest Model
+
+```{r}
+#Random Forest Model
+forest_cognition <- randomForest(AI_usage_freq ~ ., data = cognition_train)
+varImpPlot(forest_cognition)
+forest_cognition
+
+
+#Test Accuracy
+pred_forest <- predict(forest_cognition, cognition_test)
+mean(as.character(pred_forest) == as.character(cognition_test$AI_usage_freq))
+table(pred_forest, cognition_test$AI_usage_freq)
+```
+
+Accuracy is 0.2205882
+
+```{r}
+
+#Factor Analysis Models
+saveRDS(fa_companionship, "~/capstone/data/models/fa_companionship.rds")
+saveRDS(fa_cognition, "~/capstone/data/models/fa_cognition.rds")
+
+
+#Linear Regression Models
+saveRDS(lm_companionship_all, "~/capstone/data/models/lm_companionship_all.rds")
+saveRDS(lm_companionship_step, "~/capstone/data/models/lm_companionship_step.rds")
+saveRDS(lm_cognition_all, "~/capstone/data/models/lm_cognition_all.rds")
+saveRDS(lm_cognition_step, "~/capstone/data/models/lm_cognition_step.rds")
+
+
+#CART Models
+saveRDS(cart_companionship, "~/capstone/data/models/cart_companionship.rds")
+saveRDS(cart_cognition, "~/capstone/data/models/cart_cognition.rds")
+
+
+#Random Forest Model
+saveRDS(forest_companionship, "~/capstone/data/models/rf_companionship.rds")
+saveRDS(forest_cognition, "~/capstone/data/models/rf_cognition.rds")
+
+```
+

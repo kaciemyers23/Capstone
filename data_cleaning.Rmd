@@ -1,0 +1,304 @@
+---
+title: "Data Cleaning Capstone"
+author: "Kacie Myers"
+date: "2-10-2026"
+output: pdf
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+companionship_raw <- read_csv("data/companionship_raw.csv")
+cognition_raw <- read_csv("data/cognition_raw.csv")
+```
+
+#Deleting Variables
+
+
+
+companionship working 
+```{r}
+companionship_working <- companionship_raw %>%
+  dplyr::select(-`I have felt cheerful and in good spirits.`,
+         -`I have felt calm and relaxed.`,
+         -`I have felt active and vigorous.`,
+         -`I woke up feeling fresh and rested.`,
+         -`This is an attention check. Please select “Agree” for this question.`)
+```
+
+cognition working
+```{r}
+cognition_working <- cognition_raw %>%
+  dplyr::select(-`I prefer to check my ideas with AI before finalising an important decision.`,
+         -`Describe a recent moment where you relied on an AI tool to help you make a decision — big or small. What made you turn to AI instead of deciding on your own?`)
+```
+
+
+# Renaming Variables
+
+companionship working
+```{r}
+companionship_working <- companionship_working %>%
+  rename(AI_usage_freq = `How often do you use digital or AI-powered tools (e.g., ChatGPT, Copilot, Gemini, AI-enhanced search) in your daily life?`,
+         hours_online = `On average, how many hours do you spend online each day? (self-estimate)`,
+         AI_use = `What do you use AI for most often? (Select all that apply)`,
+         AI_confidence = `In general, how confident do you feel using AI tools?`,
+         AI_comfort = `How comfortable do you feel interacting with AI tools?`,
+         pre_attachment_knowledge = `Before taking this survey, how familiar were you with the idea that some people may form emotional attachments or dependencies on AI companions (such as chatbots, virtual partners, or AI assistants)?`,
+         attachment_encounters_freq = `How often have you encountered discussions or examples of people forming emotional attachments to AI companions?`,
+         AI_replace_human_freq = `How often do interactions with AI tools replace interactions you might otherwise have with other people?`,
+         digital_effect_mind = `How much does modern digital life affect your ability to focus, decide, or think clearly?`,
+         AI_influence_decisions = `AI tools influence how I think about my decisions.`,
+         feeling_lonely = `How often do you feel lonely?`,
+         human_relation_satisfaction = `How satisfied are you with the quality of your current human relationships?`,
+         AI_emotional_support = `To what extent do you feel you receive emotional support or comfort from AI tools?`,
+         AI_to_human_meaningful = `How meaningful do interactions with AI tools feel to you compared with your relationships with other people?`,
+         AI_to_human_comfort = `How comfortable are you sharing personal thoughts or emotions with AI tools that you would not share with most people?`,
+         AI_to_human_emotional_safety = `How emotionally safe do you feel expressing yourself to AI tools compared with other people?`,
+         AI_trust = `How much do you trust AI systems to act in your best interests?`,
+         AI_boundaries = `How clear are your personal boundaries when interacting with AI tools?`,
+         AI_boundaries_change = `Compared to when you first used AI tools, do you feel your emotional or conversational boundaries with them have changed?`,
+         risk_concern = `How concerned are you about potential risks (privacy, emotional dependence, misinformation) when interacting with AI tools?`,
+         dependency_concerns = `How concerned are you about becoming emotionally dependent on AI tools over time?`,
+         AI_rely_growth = `How likely is it that you will rely more on AI tools for connection, conversation, or companionship in the future than you do now?`,
+         open_to_AI_relationship = `How open are you to the idea of developing a deeper emotional relationship with an AI tool at any point in the future?`,
+         AI_replace_human = `Do you believe AI could meaningfully replace some forms of human companionship for people in the future?`,
+         socially_acceptable = `How socially acceptable do you think it is for people to form emotional connections with AI tools today?`,
+         personal_or_other_relationship = `Have you personally experienced, or do you personally know someone who has experienced, a deeper emotional connection with an AI tool for companionship or support?`,
+         only_humans = `Do you believe there are emotional needs that only other humans can meet, regardless of how advanced AI becomes?`,
+         clear_life_priorities = `How clear do you feel about what matters most in your life right now?`,
+         clear_values = `How clear are your core personal values to you?`,
+         decisions_align_values = `How well do your daily decisions align with your core personal values?`,
+         decisions_conflict_values = `How often do you feel a conflict between what you value and how you spend your time?`,
+         clear_AI_values = `How clear do you feel the values of AI systems are when you interact with them?`,
+         AI_values_align_personal = `To what extent do you feel that AI tools behave in ways that align with your personal values?`,
+         AI_emotion_align_personal = `To what extent do AI tools reflect emotional values that matter to you (e.g., empathy, honesty, respect)?`,
+         AI_different_values_concern = `How concerned are you that AI systems might act based on values that conflict with your own?`,
+         AI_future_values_confidence = `How confident are you that AI systems will become better aligned with human values in the future?`,
+         AI_respect_expectations = `How strongly do you expect AI systems to respect your personal boundaries and emotional needs?`,
+         AI_values = `Which values do you believe AI systems should reflect? (select up 3)`,
+         interest_in_daily_life = `My daily life has been filled with things that interest me.`,
+         emotional_wellbeing = `How would you describe your general emotional wellbeing?`,
+         age = `What is your age group?`,
+         gender = `Which of the following best describes your gender?`,
+         country = `Country of residence`,
+         education = `What is your highest level of education?`,
+         work_status = `Which of the following best describes your current work status?`,
+         AI_form_of_companionship = `To what extent do AI tools feel like a form of companionship to you?`)
+```
+
+
+cognition working
+```{r}
+cognition_working <- cognition_working %>%
+  rename(AI_usage_freq = `How often do you use digital or AI-powered tools (e.g., ChatGPT, Copilot, Gemini, AI-enhanced search) in your daily life?`,
+         hours_online = `On average, how many hours do you spend online each day? (self-estimate)`,
+         AI_help_decisions = `I often use AI tools to help me make decisions, even for everyday choices.`,
+         confident_in_AI_decisions = `I feel more confident in my decisions when an AI tool supports my thinking.`,
+         rely_on_AI = `I tend to rely on AI tools when making decisions feels difficult.`,
+         AI_important_decisions = `For important decisions, I feel more comfortable checking an AI tool as part of my process.`,
+         AI_clarity = `AI can be helpful for giving me clarity when I’m unsure what choice to make.`,
+         second_guessing_self = `I’ve started second-guessing my own judgement more than I used to.`,
+         AI_differs = `If AI gives a different answer to mine, I sometimes wonder whether I might be mistaken.`,
+         AI_thinking_right_track = `I use AI tools to check whether my thinking is on the right track.`,
+         pause_to_check = `I tend to pause before acting so I can check what an AI tool suggests.`,
+         change_own_decisions = `Using AI regularly has changed the way I feel about making decisions on my own.`,
+         AI_influence_decisions_think = `I think about how much AI might be influencing my decisions.`,
+         AI_persuasive = `I feel that AI suggestions can be persuasive, even when I try to rely on my own intuition.`,
+         judgement_separation = `I need to take a moment to separate my own judgement from AI suggestions.`,
+         rely_awareness = `Even when AI is helpful, I’m aware that relying on it too much may not be ideal for me long-term.`,
+         independent_without_AI = `I feel more independent when I make decisions without using AI.`,
+         AI_influence_decisions = `AI tools influence how I think about my decisions.`,
+         reflect_decision_style = `I occasionally reflect on whether AI is shaping my decision-making style.`,
+         conflicted_ab_influence = `I feel conflicted about how much influence AI has on me.`,
+         AI_effect_strength = `I generally trust my own judgement, but AI tools can sometimes affect how strongly I feel about a choice.`,
+         AI_best_interest = `How much do you trust AI systems to act in your best interests?`,
+         clear_life_priorities = `How clear do you feel about what matters most in your life right now?`,
+         digital_effect_mind = `How much does modern digital life affect your ability to focus, decide, or think clearly?`,
+         AI_growing_role = `How do you feel about the growing role of AI in everyday decision-making?`,
+         AI_values = `Which values do you believe AI systems should reflect? (select up 3)`,
+         age = `What is your age group?`,
+         gender = `Which of the following best describes your gender?`,
+         country = `Country of residence`,
+         education = `What is your highest level of education?`,
+         work_status = `Which of the following best describes your current work status?`,
+         emotional_wellbeing = `How would you describe your general emotional wellbeing?`)
+         
+```
+
+
+
+
+# Separating list variables
+
+
+companionship working
+```{r}
+companionship_working <- companionship_working %>%
+  separate(AI_values, into = c("AI_v1", "AI_v2", "AI_v3"), sep = ", ") %>%
+  mutate(empathy_AI_values = case_when(AI_v1 == "Empathy" | AI_v2 == "Empathy" | AI_v3 == "Empathy" ~ "1")) %>%
+  mutate(empathy_AI_values = case_when(empathy_AI_values == "1" ~ "1",
+                                       is.na(empathy_AI_values) == TRUE ~ "0")) %>%
+  mutate(fairness_AI_values = case_when(AI_v1 == "Fairness" | AI_v2 == "Fairness" | AI_v3 == "Fairness" ~ "1")) %>%
+  mutate(fairness_AI_values = case_when(fairness_AI_values == "1" ~ "1",
+                                       is.na(fairness_AI_values) == TRUE ~ "0")) %>%
+  mutate(honesty_AI_values = case_when(AI_v1 == "Honesty" | AI_v2 == "Honesty" | AI_v3 == "Honesty" ~ "1")) %>%
+  mutate(honesty_AI_values = case_when(honesty_AI_values == "1" ~ "1",
+                                       is.na(honesty_AI_values) == TRUE ~ "0")) %>%
+  mutate(wellbeing_AI_values = case_when(AI_v1 == "Human Wellbeing" | AI_v2 == "Human Wellbeing" | AI_v3 == "Human Wellbeing" ~ "1")) %>%
+  mutate(wellbeing_AI_values = case_when(wellbeing_AI_values == "1" ~ "1",
+                                       is.na(wellbeing_AI_values) == TRUE ~ "0")) %>%
+  mutate(nonharm_AI_values = case_when(AI_v1 == "Non-harm" | AI_v2 == "Non-harm" | AI_v3 == "Non-harm" ~ "1")) %>%
+  mutate(nonharm_AI_values = case_when(nonharm_AI_values == "1" ~ "1",
+                                       is.na(nonharm_AI_values) == TRUE ~ "0")) %>%
+  mutate(respect_AI_values = case_when(AI_v1 == "Respect" | AI_v2 == "Respect" | AI_v3 == "Respect" ~ "1")) %>%
+  mutate(respect_AI_values = case_when(respect_AI_values == "1" ~ "1",
+                                       is.na(respect_AI_values) == TRUE ~ "0")) %>%
+  mutate(responsibility_AI_values = case_when(AI_v1 == "Responsibility" | AI_v2 == "Responsibility" | AI_v3 == "Responsibility" ~ "1")) %>%
+  mutate(responsibility_AI_values = case_when(responsibility_AI_values == "1" ~ "1",
+                                       is.na(responsibility_AI_values) == TRUE ~ "0")) %>%
+  mutate(transparency_AI_values = case_when(AI_v1 == "Transparency" | AI_v2 == "Transparency" | AI_v3 == "Transparency" ~ "1")) %>%
+  mutate(transparency_AI_values = case_when(transparency_AI_values == "1" ~ "1",
+                                       is.na(transparency_AI_values) == TRUE ~ "0")) %>%
+  mutate(accountability_AI_values = case_when(AI_v1 == "Accountability" | AI_v2 == "Accountability" | AI_v3 == "Accountability" ~ "1")) %>%
+  mutate(accountability_AI_values = case_when(accountability_AI_values == "1" ~ "1",
+                                       is.na(accountability_AI_values) == TRUE ~ "0")) %>%
+  mutate(accuracy_AI_values = case_when(AI_v1 == "Accuracy" | AI_v2 == "Accuracy" | AI_v3 == "Accuracy" ~ "1")) %>%
+  mutate(accuracy_AI_values = case_when(accuracy_AI_values == "1" ~ "1",
+                                       is.na(accuracy_AI_values) == TRUE ~ "0")) 
+```
+
+cognition working
+```{r}
+cognition_working <- cognition_working %>%
+  separate(AI_values, into = c("AI_v1", "AI_v2", "AI_v3"), sep = ", ") %>%
+  mutate(empathy_AI_values = case_when(AI_v1 == "Empathy" | AI_v2 == "Empathy" | AI_v3 == "Empathy" ~ "1")) %>%
+  mutate(empathy_AI_values = case_when(empathy_AI_values == "1" ~ "1",
+                                       is.na(empathy_AI_values) == TRUE ~ "0")) %>%
+  mutate(fairness_AI_values = case_when(AI_v1 == "Fairness" | AI_v2 == "Fairness" | AI_v3 == "Fairness" ~ "1")) %>%
+  mutate(fairness_AI_values = case_when(fairness_AI_values == "1" ~ "1",
+                                       is.na(fairness_AI_values) == TRUE ~ "0")) %>%
+  mutate(honesty_AI_values = case_when(AI_v1 == "Honesty" | AI_v2 == "Honesty" | AI_v3 == "Honesty" ~ "1")) %>%
+  mutate(honesty_AI_values = case_when(honesty_AI_values == "1" ~ "1",
+                                       is.na(honesty_AI_values) == TRUE ~ "0")) %>%
+  mutate(wellbeing_AI_values = case_when(AI_v1 == "Human Wellbeing" | AI_v2 == "Human Wellbeing" | AI_v3 == "Human Wellbeing" ~ "1")) %>%
+  mutate(wellbeing_AI_values = case_when(wellbeing_AI_values == "1" ~ "1",
+                                       is.na(wellbeing_AI_values) == TRUE ~ "0")) %>%
+  mutate(nonharm_AI_values = case_when(AI_v1 == "Non-harm" | AI_v2 == "Non-harm" | AI_v3 == "Non-harm" ~ "1")) %>%
+  mutate(nonharm_AI_values = case_when(nonharm_AI_values == "1" ~ "1",
+                                       is.na(nonharm_AI_values) == TRUE ~ "0")) %>%
+  mutate(respect_AI_values = case_when(AI_v1 == "Respect" | AI_v2 == "Respect" | AI_v3 == "Respect" ~ "1")) %>%
+  mutate(respect_AI_values = case_when(respect_AI_values == "1" ~ "1",
+                                       is.na(respect_AI_values) == TRUE ~ "0")) %>%
+  mutate(responsibility_AI_values = case_when(AI_v1 == "Responsibility" | AI_v2 == "Responsibility" | AI_v3 == "Responsibility" ~ "1")) %>%
+  mutate(responsibility_AI_values = case_when(responsibility_AI_values == "1" ~ "1",
+                                       is.na(responsibility_AI_values) == TRUE ~ "0")) %>%
+  mutate(transparency_AI_values = case_when(AI_v1 == "Transparency" | AI_v2 == "Transparency" | AI_v3 == "Transparency" ~ "1")) %>%
+  mutate(transparency_AI_values = case_when(transparency_AI_values == "1" ~ "1",
+                                       is.na(transparency_AI_values) == TRUE ~ "0")) %>%
+  mutate(accountability_AI_values = case_when(AI_v1 == "Accountability" | AI_v2 == "Accountability" | AI_v3 == "Accountability" ~ "1")) %>%
+  mutate(accountability_AI_values = case_when(accountability_AI_values == "1" ~ "1",
+                                       is.na(accountability_AI_values) == TRUE ~ "0")) %>%
+  mutate(accuracy_AI_values = case_when(AI_v1 == "Accuracy" | AI_v2 == "Accuracy" | AI_v3 == "Accuracy" ~ "1")) %>%
+  mutate(accuracy_AI_values = case_when(accuracy_AI_values == "1" ~ "1",
+                                       is.na(accuracy_AI_values) == TRUE ~ "0")) 
+```
+
+
+
+```{r}
+companionship_working <- companionship_working %>%
+  mutate(emotional_AI_use = ifelse(
+    grepl("Emotional support or conversation", AI_use), 1, 0))
+```
+
+
+## Creating Factors
+
+cognition clean
+
+```{r}
+cognition_working <- cognition_working %>%
+  mutate(AI_usage_freq = 
+           factor(AI_usage_freq, 
+                  levels = c("Never", "Rarely", "Occasionally", "Sometimes", "Often", "Very often", "Everyday"),
+                  ordered = TRUE),
+         hours_online = 
+           factor(hours_online, 
+                  levels = c("Less than 2 hours", "2–4 hours", "5–6 hours", "7–8 hours", "9–10 hours", "11–12 hours", "More than 12 hours"),
+                  ordered = TRUE),
+         age = 
+           factor(age, 
+                  levels = c("18 - 24", "25 - 34", "35 - 44", "45 - 54", "55 - 65", "Over 65"),
+                  ordered = TRUE),
+         work_status = 
+           factor(work_status, 
+                  levels = c("Student", "Not currently working", "Employed part-time", "Employed full time", "Self-employed / freelance", "Other"),
+                  ordered = TRUE),
+         education = 
+           factor(education, 
+                  levels = c("Less than high school", "High school", "Some university/college", "Bachelor’s degree", "Postgraduate degree", "Other"),
+                  ordered = TRUE))
+```
+
+companionship_clean
+
+```{r}
+companionship_working <- companionship_working %>%
+  mutate(AI_usage_freq = 
+           factor(AI_usage_freq, 
+                  levels = c("Never", "Rarely", "Occasionally", "Sometimes", "Often", "Very often", "Everyday"),
+                  ordered = TRUE),
+         hours_online = 
+           factor(hours_online, 
+                  levels = c("Less than 2 hours", "2–4 hours", "5–6 hours", "7–8 hours", "9–10 hours", "11–12 hours", "More than 12 hours"),
+                  ordered = TRUE),
+         attachment_encounters_freq = 
+           factor(attachment_encounters_freq, 
+                  levels = c("Never", "Rarely", "Occasionally", "Sometimes", "Often", "Very often", "Everyday"),
+                  ordered = TRUE),
+         AI_replace_human_freq =
+           factor(AI_replace_human_freq, 
+                  levels = c("Never", "Rarely", "Occasionally", "Sometimes", "Often", "Very often", "Everyday"),
+                  ordered = TRUE),
+         digital_effect_mind =
+           factor(digital_effect_mind, 
+                  levels = c("Not at all", "Slightly", "Moderately", "Significantly", "Extremely"),
+                  ordered = TRUE),
+         age = 
+           factor(age, 
+                  levels = c("18 - 24", "25 - 34", "35 - 44", "45 - 54", "55 - 65", "Over 65"),
+                  ordered = TRUE),
+         work_status = 
+           factor(work_status, 
+                  levels = c("Student", "Not currently working", "Employed part-time", "Employed full time", "Self-employed / freelance", "Other"),
+                  ordered = TRUE),
+         education = 
+           factor(education, 
+                  levels = c("Less than high school", "High school", "Some university/college", "Bachelor’s degree", "Postgraduate degree", "Other"),
+                  ordered = TRUE))
+```
+
+
+
+
+# Final Cleaning
+```{r}
+companionship_clean <- companionship_working %>%
+  dplyr::select(-AI_use, -AI_v1, -AI_v2, -AI_v3) %>% na.omit()
+
+cognition_clean <- cognition_working %>%
+  dplyr::select(-AI_v1, -AI_v2, -AI_v3) 
+```
+
+
+
+```{r}
+write.csv(companionship_clean, "companionship_clean.csv", row.names = FALSE)
+write.csv(cognition_clean, "cognition_clean.csv", row.names = FALSE)
+```
+
+
